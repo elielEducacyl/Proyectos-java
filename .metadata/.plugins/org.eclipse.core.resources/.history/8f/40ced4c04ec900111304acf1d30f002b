@@ -1,0 +1,15 @@
+package ejercicios_16_10;
+
+public class Main {
+	public static void main(String[] args) {
+		
+		final double IVA_GENERAL = 0.21;
+		
+	}
+	
+	public static double precioFinal (double precio) {
+		double total = 0;
+		
+		total = precio * IVA_GENERAL;
+	}
+}

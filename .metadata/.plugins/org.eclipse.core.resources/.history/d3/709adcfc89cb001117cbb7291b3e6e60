@@ -1,0 +1,116 @@
+package proteccionEspacial;
+
+import java.util.Scanner;
+
+public class defensaEspacial {
+
+	String nombre = "Eliel";
+	String apellido1 = "Gonzalez";
+	String apellido2 = "Hernandez";
+	public static void main (String[] args) {
+		//mision();
+		misionExtra();
+	}
+	
+	public static void mision () {
+		int bateria = 100;
+		int cuadrante = 0;
+		int cuadrantesTotales = 16;
+		
+		Scanner sc = new Scanner(System.in);
+		
+		for (int cuadrantes = 0; cuadrantes <= cuadrantesTotales; cuadrantes+= 4) {
+			int meteoritos = 20;
+			System.out.println("Escaneando cuadrantes . . .");
+			System.out.println("Cuadrantes escaneados: " + cuadrante);
+			
+			int codigoSeguridad = (int) (Math.random() * 10) + 1;
+			int codigoCentral = 0;
+			
+			do {
+				System.out.println("Introdusca el codigo de seguridad");
+				codigoCentral = sc.nextInt();
+			} while (codigoCentral != codigoSeguridad);
+			
+			
+			int disparos = 0;
+			while (meteoritos != 0 || bateria <= 0) {
+				bateria-= 10;
+				System.out.println("Disparando lazer...");
+				meteoritos-=5;
+				System.out.println("Se han destruido 5 meteoritos, quedan " + meteoritos);
+				disparos++;
+			}
+			
+			System.out.println("Se ha disparado el cañon: " + disparos);
+			System.out.println("Queda: " + bateria + "% de bateria");
+			
+			if (bateria <= 30) {
+				System.out.println("La bateria se esta recargando");
+				bateria = 100;
+			}
+			cuadrante += 4;
+			System.out.println(cuadrante + " Han sido defendidos");
+		}
+		System.out.println("Fin");
+		sc.close();
+
+	}
+	
+	public static void misionExtra () {
+		int bateria = 100;
+		int cuadrante = 0;
+		int cuadrantesTotales = 16;
+		int meteoritosDestruidos = 0;
+		
+		Scanner sc = new Scanner(System.in);
+		
+		for (int cuadrantes = 0; cuadrantes <= cuadrantesTotales; cuadrantes+= 4) {
+			
+			int meteoritos = numA();
+			System.out.println("Escaneando cuadrantes . . .");
+			System.out.println("Cuadrantes escaneados: " + cuadrante);
+			
+			int codigoSeguridad = (int) (Math.random() * 120) + 42;
+			int codigoCentral = 0;
+			
+			do {
+				System.out.println("Introdusca el codigo de seguridad");
+				codigoCentral = sc.nextInt();
+			} while (codigoCentral != codigoSeguridad);
+			
+			
+			int disparos = 0;
+			while (meteoritos != 0 || bateria <= 0) {
+				bateria-= 10;
+				System.out.println("Disparando lazer...");
+				meteoritos-=5;
+				meteoritosDestruidos+=10;
+				System.out.println("Se han destruido 5 meteoritos, quedan " + meteoritos);
+				disparos++;
+			}
+			
+			System.out.println("Se ha disparado el cañon: " + disparos);
+			System.out.println("Queda: " + bateria + "% de bateria");
+			
+			if (bateria <= 30) {
+				System.out.println("La bateria se esta recargando");
+				bateria = 100;
+			}
+			cuadrante += 4;
+			System.out.println(cuadrante + " Han sido defendidos");
+		}
+		System.out.println("Se destruyeron: " + meteoritosDestruidos);
+		sc.close();
+
+	}
+	
+	public static int numA () {	
+		int num = 0;
+		int al = 0;
+		do {
+			al = (int) (Math.random() * 120) + 1;
+		} while (num >= 42 || num <= 120);
+		return al;
+	}
+}

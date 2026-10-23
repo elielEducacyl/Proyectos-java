@@ -1,0 +1,45 @@
+package elielg_20_10;
+
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		
+		int num = 0;
+		boolean esCorrecto = false;
+		
+		do {
+			System.out.println("ingrese un numero impar");
+			num = in.nextInt();
+			if (0 == (num%2)) {
+				esCorrecto = false;
+				System.out.println("Ingrese un numero impar");
+			} else {
+				esCorrecto = true;
+			}
+		} while (!esCorrecto);
+		
+		int mitad = (int) (num / 2);
+		
+		for (int i = 0; i <= num; i++) {
+			for (int j = 0; j<= mitad; j++) {
+				if (j <= (mitad -1)) {
+					imprimirVacio();
+				} else {
+					imprimirAsterisco();
+				}
+			}
+		}
+		
+	}
+
+	private static void imprimirAsterisco() {
+		System.out.print("*");
+		
+	}
+
+	private static void imprimirVacio() {
+		System.out.print(" ");
+	}
+}

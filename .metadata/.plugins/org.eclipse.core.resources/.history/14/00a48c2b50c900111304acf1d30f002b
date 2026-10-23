@@ -1,0 +1,72 @@
+package ejercicios_16_10;
+
+import java.util.Scanner;
+
+public class Main {
+	
+	static final double IVA_GENERAL = 0.21;
+	
+	public static void main(String[] args) {
+		
+		Scanner in = new Scanner(System.in);
+	
+		int num1 = 125;
+		System.out.println("El IVA de " + num1 + " es: " + precioFinal(num1));
+		System.out.println("El IVA de " + num1 + " con 4% de IVA es: " + precioFinal(num1, 0.04));
+		
+		int dias = diaMes(in);
+		System.out.println("Este mes tiene:" + dias);
+	}
+	
+	public static double precioFinal (double precio) {
+		
+		double total = 0;
+		
+		total = precio * ( 1 +IVA_GENERAL);
+		return total;
+	}
+	
+	public static double precioFinal (double precio, double IVA) {
+		
+		double total = 0;
+		
+		total = precio * (1 + IVA);
+		
+		return total;
+	}
+	
+	public static int diaMes (Scanner in) {
+		
+		System.out.println("Ingrese el numero del mes: ");
+		int mes = in.nextInt();
+		
+		switch (mes) {
+		case 1:
+			return 31;
+		case 2: 
+			return 27;
+		case 3:
+			return 30;
+		case 4: 
+			return 31;
+		case 5:
+			return 30;
+		case 6: 
+			return 31;
+		case 7:
+			return 30;
+		case 8: 
+			return 31;
+		case 9:
+			return 30;
+		case 10: 
+			return 31;
+		case 11:
+			return 30;
+		case 12: 
+			return 31;
+		default:
+			return 0;
+		}
+	}
+}
