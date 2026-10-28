@@ -24,3 +24,6 @@ bin/
 .settings/
 .metadata/
 .vscode/
+
+# Otros 
+*.7z
