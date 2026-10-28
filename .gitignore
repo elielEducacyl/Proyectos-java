@@ -1,0 +1,26 @@
+/.metadata/
+# Archivos compilados
+*.class
+
+# Archivos empaquetados
+*.jar
+*.war
+*.ear
+
+# Carpetas de construcción (build)
+target/
+build/
+out/
+bin/
+
+# Archivos de registro
+*.log
+
+# Configuraciones de IDEs (IntelliJ, Eclipse, VS Code)
+.idea/
+*.iml
+.project
+.classpath
+.settings/
+.metadata/
+.vscode/
