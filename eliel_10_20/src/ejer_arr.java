@@ -30,7 +30,7 @@ public class ejer_arr {
 
         texto = invertir(texto);
 
-        System.out.println("El texto es: "+texto.toUpperCase());
+        System.out.println("El texto es: "+texto.toUpperCase()); //yo q se tio
     }
 
     private static void esDNI(Scanner in) {
