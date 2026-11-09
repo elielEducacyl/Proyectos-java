@@ -24,6 +24,8 @@ bin/
 .settings/
 .metadata/
 .vscode/
+/shelf/
+*.xml
 
 # Otros 
 *.7z

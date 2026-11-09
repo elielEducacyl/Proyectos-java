@@ -18,7 +18,7 @@ public class ejer_arr {
         StringBuilder invertido = new StringBuilder();
 
         for(int i = text.length() -1; i > 0; i--){
-            invertido += text.charAt(i);
+            //invertido = text.charAt(i);
         }
 
         return invertido.toString();
