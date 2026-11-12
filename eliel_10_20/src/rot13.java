@@ -1,78 +1,63 @@
 import java.util.Scanner;
 
 public class rot13 {
-    public static final char[] abecedario = {',', '.', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+    public static final char[] ABECEDARIO = {',', '.', '1', '2', '3', '4', '5', '6', '7', '8', '9',
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
             'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 
     public static void main (String[] args) {
 
-        Scanner in = new Scanner(System.in);
-
-        System.out.println("Ingrese un texto para cifrar");
-        String texto = in.nextLine();
-        System.out.println("Ingrese un numero");
-        int numero = in.nextInt();
-
+        int numero = 0;
+        int size = ABECEDARIO.length;
+        boolean esValido = false;
+        String texto = "";
         StringBuilder result = new StringBuilder();
 
-        char[] rot13 = {'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'n', 'o', 'p',
-                'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', ' '};
+        Scanner in = new Scanner(System.in);
 
-        int size = texto.length();
-        char[] codificado = new char[size];
-        //char[] codificado2 = new char[size];
+        //NOTE: Verificamos que el texto ingresado siempre sea correcto y no tenga carracteres especiales
+        while (!esValido) {
+            System.out.println("Ingrese un texto para cifrar");
+            texto = in.nextLine();
 
-        int letra = 0;
-        String regex = "[ ,.][0-9][A-Z][a-z]";
-        String regexInv = "[ ,.][9-0][Z-A][z-a]";
-
-        String otroTexto = texto.replaceAll("A-Za-z", "N-ZA-Mn-za-m");
-        System.out.println("intento " + otroTexto);
-        System.out.println(" ");
-
-        for (int i = 0; i<size; i++){
-            if (texto.matches(regex)){
-                letra = (int) texto.charAt(i);
-                letra += 13;
-                codificado[i] = (char) letra;
+            if (texto.matches("^[0-9A-Za-z \\.,]")) {
+                esValido = true;
+            } else  {
+                System.out.println("Por favor ingrese un texto valido");
             }
         }
-
-        // NOTE: funcional
-//        for (int i = 0; i<size; i++){
-//           for (int j = 0; j < abecedario.length; j++){
-//               if (texto.charAt(i) == abecedario[j]){
-//                  codificado2[i] = rot13[j];
-//               }
-//           }
-//        }
-        System.out.println(" ");
-        for (int i = 0; i<size; i++){
-            System.out.print((char) codificado[i]);
-        }
-
-        System.out.println(" ");
+        System.out.println("Ingrese el numero de rotaciones: ");
+        numero = in.nextInt();
 
         for (int i = 0; i<size; i++){
             result.append(root(texto.charAt(i), numero));
         }
+
         System.out.println(result);
     }
 
+    /*
+     * NOTE: Toma el caracter, luego busca que que posicion esta
+     * en el array abecedario, luego suma la cantidad ingresada
+     * En caso de que supere el tamaño del array,
+     * se regresa a posicion 0
+     */
     public static char root (char letra, int cant){
-        int size = abecedario.length;
+        int size = ABECEDARIO.length;
         int num = 0;
+
+        //NOTE: Si el caracter es un espacio, lo saltamos
         if (letra == ' ')
             return letra;
+
         for (int i = 0; i<size; i++){
-            if (abecedario[i] == letra){
+            if (ABECEDARIO[i] == letra){
                 if ((i + cant) > size){
                    num = cant - (size - i) ;
                 } else {
                     num = i + cant;
                 }
-                return abecedario[num];
+                return ABECEDARIO[num];
             }
         }
         return letra;
