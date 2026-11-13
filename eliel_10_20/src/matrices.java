@@ -29,8 +29,12 @@ public class matrices {
 
         System.out.println("===============EJERCICIOS===============");
 
-        //maximo(matriz, n);
+        System.out.println("=================PRIMERO================");
+        maximo(matriz, n);
+        System.out.println("=================SEGUNDO================");
         diagonales(matriz, n);
+        System.out.println("=================TERCERO================");
+        sumVectorial(matriz, n);
 
     }
 
@@ -48,7 +52,6 @@ public class matrices {
                 vector[i] += matriz[i][j];
             }
         }
-
         // imprimie y los suma en una sola variable
         for (int i : vector) {
             System.out.print(i +", ");
@@ -65,7 +68,7 @@ public class matrices {
        int [] vectorIzq = new int[n];
        int [] vectorDer = new int[n];
        int diagonalIzq = n - 1;
-       int total = 0;
+       //int total = 0;
 
        for (int i = 0; i < n; i++) {
            for (int j = 0; j < n; j++) {
@@ -80,16 +83,26 @@ public class matrices {
        }
 
        for (int i = 0; i < n; i++) {
-            total = vectorIzq[i] + vectorDer[i];
+           System.out.println("derecha: " + vectorDer[i] + ", izquierda: " + vectorIzq[i]);
        }
+    }
 
-        System.out.println("Derecha: ");
-       for (int i = 0; i < n; i++) {
-           System.out.println("derecha: " + vectorDer[i]);
-       }
-       for (int i = 0; i < n; i++) {
-           System.out.println("Izquierda: " + vectorIzq[i]);
-       }
-        System.out.println("Total: " + total);
+    public static void sumVectorial(int[][] matriz, int n) {
+        int [] filas = new int[n];
+        int [] columnas = new int[n];
+        int contFilas = 0;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                columnas[i] += matriz[i][j];
+                filas[contFilas] += matriz[i][j];
+                contFilas++;
+            }
+            contFilas = 0;
+        }
+
+        for (int i = 0; i < n; i++) {
+            System.out.println("filas: " + filas[i] + ", columnas: " + columnas[i]);
+        }
     }
 }
