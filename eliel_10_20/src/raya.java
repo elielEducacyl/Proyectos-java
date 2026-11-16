@@ -2,6 +2,10 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class raya {
+
+    static final int JUGADOR = 1;
+    static final int MAQUINA = 2;
+
     public static void main (String[] args) {
         int[][] matriz = new int[3][3];
         int[] usados = new int[9];
@@ -11,13 +15,6 @@ public class raya {
         int val = 0, maquina = 0, itr = 0;
 
         Scanner in = new Scanner(System.in);
-
-        // Colocamos todos los valores a 0
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                matriz[i][j] = 0;
-            }
-        }
 
        /*
         * Loop principal
@@ -31,13 +28,10 @@ public class raya {
                val = in.nextInt();
 
                // Comprobamos que el valor no este usado ya
-               for (int i : usados){
-                   if (val == i) {
-                       System.out.println("El valor ya esta usado, introdusca otro");
-                       esCorrecto = false;
-                       break;
-                   }
-               }
+               //TODO: Terminar esto
+                if (!comprovacion(matriz, val)) {
+
+                }
 
                // Comprobamos que se pueda utilizar
                if (val > 0 && val < 9)
@@ -47,40 +41,57 @@ public class raya {
            }
 
            usados[itr] = val;
-           cambiarVal(matriz, val);
+           cambiarVal(matriz, val, JUGADOR);
 
            // Conseguimos el valor de la maquina
            maquina = valorMaquina(usados);
-           cambiarVal(matriz, maquina);
+           cambiarVal(matriz, maquina, MAQUINA);
            usados[itr] = maquina;
 
+           imprimir(matriz);
+
+           switch (comprovacion(matriz)) {
+               case JUGADOR:
+                   System.out.println("El jugador a ganado");
+                   victoria = true;
+                   break;
+               case MAQUINA:
+                   System.out.println("El maquina a ganado");
+                   victoria = true;
+                   break;
+           }
+
+           esCorrecto = false;
            itr++;
-       } while (!victoria);
+       } while (!victoria && itr < 9);
     }
 
     //NOTE: Cambia un valor de la matriz a uno añadido
-    public static int[][] cambiarVal (int[][] matriz, int val) {
-        int temp = 0;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                temp++;
-                if (temp == val) {
-                    matriz[i][j] = 1;
-                }
-            }
-        }
+    public static int[][] cambiarVal (int[][] matriz, int val, int dato) {
+        int fila = (int) val/3;
+        int columna = (int) val%3;
+        matriz[fila][columna] = dato;
+
         return matriz;
     }
 
-    // Consigue un valor de la maquina, este no puede ser igual a otro ya utilizado
+    /**
+     * Consigue un valor de la maquina, este no puede ser igual a otro ya utilizado
+     * @param usados recibe el vector de posiciones utilizadas
+     * @return devuelve un valor aleatorio que se pueda utilizar
+     */
     public static int valorMaquina (int[] usados) {
         Random rand = new Random();
-        int val = 0;
-        val = rand.nextInt(9) +1;
+        int val = rand.nextInt(9) +1;
+        boolean esCorrecto = false;
 
-        for (int i : usados){
-            if (val == i) {
-                val = rand.nextInt(9) +1;
+        while (!esCorrecto) {
+            for (int i : usados){
+                if (val == i) {
+                    val = rand.nextInt(9) +1;
+                } else {
+                    esCorrecto = true;
+                }
             }
         }
 
@@ -88,45 +99,83 @@ public class raya {
     }
 
     public static void imprimir (int[][] matriz) {
-        //TODO: encontrar como imprimir esta kgada
+        System.out.println("Imprimiendo matriz");
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (matriz[i][j] == 1) {
+                    System.out.print(" X ");
+                } else if (matriz[i][j] == 2) {
+                    System.out.print(" O ");
+                } else {
+                    System.out.print(" _ ");
+                }
+                System.out.print("|");
+            }
+            System.out.println(" ");
+        }
     }
 
-    public static boolean comprovacion (int[][] matriz) {
-        //TODO: encontrar como yo compruebo esta mierda tio
-        return true;
+    public static int comprovacion (int[][] matriz) {
+        if (rectas(matriz, JUGADOR))
+            return JUGADOR;
+        else if (diagonales(matriz, JUGADOR))
+            return JUGADOR;
+        else if (rectas(matriz, MAQUINA))
+            return MAQUINA;
+        else if (diagonales(matriz, MAQUINA))
+            return MAQUINA;
+        else return -1;
+
     }
 
+    /**
+     * Comprueba si alguna de las rectas (vertical o diagonal)
+     * es exactamente igual al valor ingresado
+     * (3 en raya)
+     *
+     * @param matriz Recibe la matriz utilizada (3 en ralla)
+     * @param val valor a comprobar
+     * @return devuelve si en caso de que exista 3 en ralla
+     */
     public static boolean rectas (int[][] matriz, int val) {
+        int size = matriz.length;
         int[] columnas = new int[3];
         int[] filas = new int[3];
         int contFilas = 0;
 
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                contFilas++;
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
                 columnas[j] += matriz[i][j];
                 filas[contFilas] += matriz[i][j];
+                contFilas++;
             }
             for (int k : columnas) {
                 if (k != val) {
-                    return true;
+                    return false;
                 }
             }for (int k : filas) {
                 if (k != val) {
-                    return true;
+                    return false;
                 }
             }
         }
-        return false;
+        return true;
     }
 
-    // TODO: convertir este metodo a uno que diga si la diagonal es igual
+    /**
+     * Comprueba las diagonales para verificar si existe un 3 en ralla
+     *
+     * @param matriz matriz 3x3 del 3 en raya
+     * @param val valor a verificar (circulo o cruz)
+     * @return true si una de las diagonales esta conformada por el valor ingresado
+     */
     public static boolean diagonales (int[][] matriz, int val) {
         int n = 3;
         int [] vectorIzq = new int[n];
         int [] vectorDer = new int[n];
-        int diagonalIzq = n;
+        int diagonalIzq = n - 1;
 
+        //TODO: verificar q esta kgada funcione bien
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (diagonalIzq == j) {
@@ -138,5 +187,26 @@ public class raya {
                 }
             }
         }
+
+        // si uno de los valores no es igual al ingresado, deja de ser verdadero
+        for (int i : vectorIzq) {
+            if (i != val) {
+                return false;
+            }
+        }
+        for (int i : vectorDer) {
+            if (i != val) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean comprovacion (int[][] matriz, int val) {
+        int fila = (int) val/3;
+        int columna = (int) val%3;
+
+        return matriz[fila][columna] == 0;
     }
 }
+
