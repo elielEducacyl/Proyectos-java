@@ -14,6 +14,12 @@ public class raya {
 
         int val = 0, maquina = 0, itr = 0;
 
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                matriz[i][j] = 0;
+            }
+        }
+
         Scanner in = new Scanner(System.in);
 
        /*
@@ -28,9 +34,9 @@ public class raya {
                val = in.nextInt();
 
                // Comprobamos que el valor no este usado ya
-               //TODO: Terminar esto
-                if (!comprovacion(matriz, val)) {
-
+                if (comprovacion(matriz, val)) {
+                    System.out.println("El valor introducido no es correcto");
+                    continue;
                 }
 
                // Comprobamos que se pueda utilizar
@@ -50,7 +56,7 @@ public class raya {
 
            imprimir(matriz);
 
-           switch (comprovacion(matriz)) {
+           switch (comp(matriz)) {
                case JUGADOR:
                    System.out.println("El jugador a ganado");
                    victoria = true;
@@ -82,13 +88,13 @@ public class raya {
      */
     public static int valorMaquina (int[] usados) {
         Random rand = new Random();
-        int val = rand.nextInt(9) +1;
+        int val = rand.nextInt(9);
         boolean esCorrecto = false;
 
         while (!esCorrecto) {
             for (int i : usados){
                 if (val == i) {
-                    val = rand.nextInt(9) +1;
+                    val = rand.nextInt(9);
                 } else {
                     esCorrecto = true;
                 }
@@ -162,6 +168,26 @@ public class raya {
         return true;
     }
 
+    public static int comp(int[][] matriz) {
+
+        int victoria = 0;
+        for (int i = 0; i < 3; i++) {
+            if (matriz[i][0] == matriz[i][1] && matriz[i][1] == matriz[i][2]) {
+               victoria = matriz[i][0];
+            } else if (matriz[0][i] == matriz[1][2] && matriz[1][i] == matriz[2][0]) {
+               victoria = matriz[0][i];
+            }
+
+            if (matriz[0][0] == matriz[1][1] && matriz[1][1] == matriz[2][2]) {
+                victoria = matriz[0][0];
+            } else if (matriz[0][2] == matriz[1][1] && matriz[1][1] == matriz[2][0]) {
+                victoria = matriz[0][2];
+            }
+        }
+
+        return victoria;
+    }
+
     /**
      * Comprueba las diagonales para verificar si existe un 3 en ralla
      *
@@ -206,7 +232,10 @@ public class raya {
         int fila = (int) val/3;
         int columna = (int) val%3;
 
-        return matriz[fila][columna] == 0;
+        if (val > matriz.length) {
+            System.out.println("El valor es incorrecto");
+            return false;
+        } else return matriz[fila][columna] != 0;
     }
 }
 
