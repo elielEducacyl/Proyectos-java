@@ -93,7 +93,7 @@ public class buscaminas {
 
     //TODO terminar esto
     public static void rastrear (char[][] tablero) {
-        int size = tablero.length;
+        int size = tablero.length; // hola
 
         // Va directamente a la mina y analiza todos los cuadrados a su alrededor, colocandoles un contador
         // En caso de ya tener, les suve uno
