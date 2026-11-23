@@ -7,13 +7,20 @@ public class buscaminas {
     //TODO Crear metodo para ingreo del usuario
     //TODO Crear metodo para detectar que tan cerca estan las minas
 
-    static char MINA = '*';
+    static final char MINA = '*';
+    static final char JUGADOR = 'X';
 
     public static void main(String[] args) {
 
         System.out.println("Ingrese el tamaño del tablero: ");
         Scanner in = new Scanner(System.in);
         int n = in.nextInt();
+        boolean victoria = false;
+        boolean esCorrecto = false;
+
+        int[] jugado = new int[n];
+
+        int introducido = 0;
 
         char[][] tablero  = new char[n][n];
 
@@ -25,12 +32,32 @@ public class buscaminas {
 
         int[] posMinas = crearMinas(tablero, n);
 
-        imprimirTablero(tablero);
 
-        rastrear(tablero);
+        // Loop principal del juego
+        do {
+            // Input del usuario
+            while (!esCorrecto) {
+                System.out.println("Ingrese el la comprobacion tablero: ");
+                introducido = in.nextInt();
 
-        imprimirTablero(tablero);
+                if (introducido > 0 && introducido < (n*n) - 1) {
+                    esCorrecto = true;
+                    //TODO codigo para añadir
+                } else {
+                    System.out.println("Ingrese un numero mayor a 0 y menor a " + (n*n - 1));
+                }
+            }
+            if (comprobar(tablero, introducido)) {
+                System.out.println("Se a pisado una mina, fin del juego");
+                colocar(tablero, introducido, JUGADOR);
+                victoria = true;
+            } else {
+                colocar(tablero, introducido, JUGADOR);
+            }
 
+            imprimirTablero(tablero);
+            esCorrecto = false;
+        } while (!victoria);
     }
 
     /**
@@ -87,55 +114,18 @@ public class buscaminas {
         int fila = posicion/size;
         int col = posicion%size;
 
-
-        tablero[fila][col] = caracter;
+        if (tablero[fila][col] == MINA)
+            tablero[fila][col] = 'O';
+         else
+            tablero[fila][col] = caracter;
     }
 
-    //TODO terminar esto
-    public static void rastrear (char[][] tablero) {
-        int size = tablero.length; // hola
+    public static boolean comprobar (char[][] tablero, int posicion) {
+        int size = tablero.length;
+        int fila = posicion/size;
+        int col = posicion%size;
 
-        // Va directamente a la mina y analiza todos los cuadrados a su alrededor, colocandoles un contador
-        // En caso de ya tener, les suve uno
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-
-                if (tablero[i][j] == MINA) {
-
-                    if ()
-                    try {
-                        if (tablero[i-1][j] == '-') tablero[i][j] = '1';
-                        else if (tablero[i-1][j] == '1') tablero[i][j] = '2';
-                        else if (tablero[i-1][j] == '2') tablero[i][j] = '3';
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        throw new RuntimeException(e);
-                    }
-
-                    try {
-                        if (tablero[i+1][j] == '-') tablero[i][j] = '1';
-                        else if (tablero[i+1][j] == '1') tablero[i][j] = '2';
-                        else if (tablero[i+1][j] == '2') tablero[i][j] = '3';
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        throw new RuntimeException(e);
-                    }
-
-                    try {
-                        if (tablero[i][j+1] == '-') tablero[i][j] = '1';
-                        else if (tablero[i][j+1] == '1') tablero[i][j] = '2';
-                        else if (tablero[i][j+1] == '2') tablero[i][j] = '3';
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        throw new RuntimeException(e);
-                    }
-
-                    try {
-                        if (tablero[i][j-1] == '-') tablero[i][j] = '1';
-                        else if (tablero[i][j-1] == '1') tablero[i][j] = '2';
-                        else if (tablero[i][j-1] == '2') tablero[i][j] = '3';
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        }
+        return tablero[fila][col] == MINA;
     }
  }
+

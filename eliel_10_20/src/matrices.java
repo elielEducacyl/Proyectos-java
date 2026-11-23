@@ -105,4 +105,33 @@ public class matrices {
             System.out.println("filas: " + filas[i] + ", columnas: " + columnas[i]);
         }
     }
+
+    public static void permutacion(int[][] matriz, int n, Scanner in) {
+        int fila = 0;
+        int columna = 0;
+
+        int[] temp = new int[n];
+
+        System.out.println("ingrese la fila: ");
+        fila = in.nextInt();
+        System.out.println("ingrese la columna: ");
+        columna = in.nextInt();
+
+        if ((fila < 0 || fila > n) &&
+                (columna < 0 || columna > n)) {
+            System.out.println("ingrese un numero valido");
+            return;
+        }
+    }
+
+    public static void perFila(int[][] matriz, int n, int num) {
+        int fila = num/n;
+        int columna = num%n;
+
+        int[] temp = new int[n];
+
+        for (int i = 0; i < n; i++) {
+
+        }
+    }
 }
