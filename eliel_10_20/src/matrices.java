@@ -2,7 +2,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class matrices {
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         Random randomizer = new Random();
 
@@ -33,22 +33,40 @@ public class matrices {
         //permutacion(matriz, n, scan);
         System.out.println("==================QUINTO================");
         transposicion(matriz, n);
-        transNC(scan, randomizer);
         System.out.println("==================SEXTO=================");
+        //transNC(scan, randomizer);
+        System.out.println("==================SEPTIMO=================");
         transpDos(matriz, n);
     }
 
     private static void transpDos(int[][] matriz, int n) {
+        int cont = 0;
+        int temp = 0;
+
+        /*
+         * Toma la matriz, el condicional verifica que
+         * no se ejecute otra vez en los numeros la transpuestos
+         * se hace una copia basica de matrices
+         */
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                if (i >= j)
+                if (cont < j) {
+                   temp = matriz[i][j];
                     matriz[i][j] = matriz[j][i];
+                    matriz[j][i] = temp;
+                }
             }
+            cont++;
         }
 
         imprimir(matriz);
     }
 
+    /**
+     * Transpone una matriz n*n
+     * @param matriz la matriz a transponer
+     * @param n el tramaño de la matriz, para evitar redundancia
+     */
     private static void transposicion(int[][] matriz, int n) {
         int[][] transposicion = new int[n][n];
 
@@ -61,15 +79,23 @@ public class matrices {
         imprimir(transposicion);
     }
 
+    /**
+     * Transposición de matrices no cuadradas
+     *
+     * @param scan Scanner, input
+     * @param rand Random, numeros aleatorios
+     */
     public static void transNC(Scanner scan, Random rand) {
+        // Creacion de la matriz
         System.out.println("Ingrese el numero de columnas: ");
         int n = scan.nextInt();
         System.out.println("Ingrese el numero de filas: ");
         int m = scan.nextInt();
+        System.out.println();
 
         int[][] matriz = new int[n][m];
 
-        //NOTE: Asignamos numeros aleatorios a la matriz
+        //Asignamos numeros aleatorios a la matriz
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 matriz[i][j] = rand.nextInt(100);
@@ -79,13 +105,13 @@ public class matrices {
         imprimir(matriz);
         System.out.println();
 
-        //TODO terminar esta mierdaaaa
-        int[][]  transposicion = new int[m][n];
+        int[][] transposicion = new int[m][n];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 transposicion[j][i] = matriz[i][j];
             }
         }
+
         imprimir(transposicion);
     }
 
@@ -104,10 +130,10 @@ public class matrices {
      * Luego saca la media de estos
      */
     public static void maximo(int[][] matriz, int n) {
-       int[] vector = new int[n];
-       int media = 0;
+        int[] vector = new int[n];
+        int media = 0;
 
-       //NOTE: sumar los valores de los arrays segundarios en un vector
+        //NOTE: sumar los valores de los arrays segundarios en un vector
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 vector[i] += matriz[i][j];
@@ -115,7 +141,7 @@ public class matrices {
         }
         // imprimie y los suma en una sola variable
         for (int i : vector) {
-            System.out.print(i +", ");
+            System.out.print(i + ", ");
             media += i;
         }
         System.out.println(" ");
@@ -125,32 +151,32 @@ public class matrices {
         System.out.println("media = " + media);
     }
 
-    public static void diagonales (int[][] matriz, int n) {
-       int [] vectorIzq = new int[n];
-       int [] vectorDer = new int[n];
-       int diagonalIzq = n - 1;
-       //int total = 0;
+    public static void diagonales(int[][] matriz, int n) {
+        int[] vectorIzq = new int[n];
+        int[] vectorDer = new int[n];
+        int diagonalIzq = n - 1;
+        //int total = 0;
 
-       for (int i = 0; i < n; i++) {
-           for (int j = 0; j < n; j++) {
-               if (diagonalIzq == j) {
-                   vectorIzq[i] += matriz[i][j];
-                   diagonalIzq--;
-               }
-               if (i == j) {
-                   vectorDer[i] += matriz[i][j];
-               }
-           }
-       }
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (diagonalIzq == j) {
+                    vectorIzq[i] += matriz[i][j];
+                    diagonalIzq--;
+                }
+                if (i == j) {
+                    vectorDer[i] += matriz[i][j];
+                }
+            }
+        }
 
-       for (int i = 0; i < n; i++) {
-           System.out.println("derecha: " + vectorDer[i] + ", izquierda: " + vectorIzq[i]);
-       }
+        for (int i = 0; i < n; i++) {
+            System.out.println("derecha: " + vectorDer[i] + ", izquierda: " + vectorIzq[i]);
+        }
     }
 
     public static void sumVectorial(int[][] matriz, int n) {
-        int [] filas = new int[n];
-        int [] columnas = new int[n];
+        int[] filas = new int[n];
+        int[] columnas = new int[n];
         int contFilas = 0;
 
         for (int i = 0; i < n; i++) {
@@ -171,9 +197,9 @@ public class matrices {
         int num1 = 0;
         int num2 = 0;
 
-        System.out.println("ingrese el primero numero: (de 0 a "+(n-1)+")");
+        System.out.println("ingrese el primero numero: (de 0 a " + (n - 1) + ")");
         num1 = in.nextInt();
-        System.out.println("ingrese el segundo numero: (de 0 a "+(n-1)+")");
+        System.out.println("ingrese el segundo numero: (de 0 a " + (n - 1) + ")");
         num2 = in.nextInt();
 
         if ((num1 < 0 || num1 > n) &&
@@ -183,7 +209,7 @@ public class matrices {
         }
 
         System.out.println("Quiere permutar filas o columnas? (f/c)");
-        String seleccion =  in.next();
+        String seleccion = in.next();
         if (seleccion.equals("f")) {
             perFila(matriz, n, num1, num2);
         } else if (seleccion.equals("c")) {
