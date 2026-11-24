@@ -24,6 +24,7 @@ public class buscaminas {
 
         char[][] tablero  = new char[n][n];
 
+        // Llenar la matriz con el caracter '-'
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 tablero[i][j] = '-';
