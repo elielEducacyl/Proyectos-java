@@ -19,12 +19,12 @@ public class matrices {
         }
 
         //NOTE: Imprimir la matriz
-        for (int[] ints : matriz) {
+        for (int i = 0; i < n; i++) {
             System.out.print("{ ");
-            for (int anInt : ints) {
-                System.out.print(anInt + ", ");
+            for (int j = 0; j < n; j++) {
+                System.out.printf("%2d ", matriz[i][j]);
             }
-            System.out.println("},");
+            System.out.println("}");
         }
 
         System.out.println("===============EJERCICIOS===============");
@@ -35,6 +35,28 @@ public class matrices {
         diagonales(matriz, n);
         System.out.println("=================TERCERO================");
         sumVectorial(matriz, n);
+        System.out.println("=================CUARTO=================");
+        //permutacion(matriz, n, scan);
+        System.out.println("==================QUINTO================");
+        transposicion(matriz, n);
+    }
+
+    private static void transposicion(int[][] matriz, int n) {
+        int[][] transposicion = new int[n][n];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                transposicion[i][j] = matriz[j][i];
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            System.out.print("{ ");
+            for (int j = 0; j < n; j++) {
+                System.out.printf("%2d ", matriz[i][j]);
+            }
+            System.out.println("}");
+        }
 
     }
 
@@ -107,31 +129,52 @@ public class matrices {
     }
 
     public static void permutacion(int[][] matriz, int n, Scanner in) {
-        int fila = 0;
-        int columna = 0;
+        int num1 = 0;
+        int num2 = 0;
 
-        int[] temp = new int[n];
+        System.out.println("ingrese el primero numero: (de 0 a "+(n-1)+")");
+        num1 = in.nextInt();
+        System.out.println("ingrese el segundo numero: (de 0 a "+(n-1)+")");
+        num2 = in.nextInt();
 
-        System.out.println("ingrese la fila: ");
-        fila = in.nextInt();
-        System.out.println("ingrese la columna: ");
-        columna = in.nextInt();
-
-        if ((fila < 0 || fila > n) &&
-                (columna < 0 || columna > n)) {
+        if ((num1 < 0 || num1 > n) &&
+                (num2 < 0 || num2 > n)) {
             System.out.println("ingrese un numero valido");
             return;
         }
-    }
 
-    public static void perFila(int[][] matriz, int n, int num) {
-        int fila = num/n;
-        int columna = num%n;
-
-        int[] temp = new int[n];
+        System.out.println("Quiere permutar filas o columnas? (f/c)");
+        String seleccion =  in.next();
+        if (seleccion.equals("f")) {
+            perFila(matriz, n, num1, num2);
+        } else if (seleccion.equals("c")) {
+            perColumna(matriz, n, num1, num2);
+        }
 
         for (int i = 0; i < n; i++) {
-
+            for (int j = 0; j < n; j++) {
+                System.out.print(matriz[i][j] + " ");
+            }
+            System.out.println();
         }
     }
+
+    private static void perColumna(int[][] matriz, int n, int num1, int num2) {
+        int temp = 0;
+
+        for (int i = 0; i < n; i++) {
+            temp = matriz[i][num1];
+            matriz[i][num2] = matriz[i][num1];
+            matriz[i][num1] = temp;
+        }
+    }
+
+    public static void perFila(int[][] matriz, int n, int col1, int col2) {
+        int[] temp;
+
+        temp = matriz[col1];
+        matriz[col1] = matriz[col2];
+        matriz[col2] = temp;
+    }
+
 }
