@@ -14,18 +14,12 @@ public class matrices {
         //NOTE: Asignamos numeros aleatorios a la matriz
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                matriz[i][j] = randomizer.nextInt(100)+1;
+                matriz[i][j] = randomizer.nextInt(100);
             }
         }
 
         //NOTE: Imprimir la matriz
-        for (int i = 0; i < n; i++) {
-            System.out.print("{ ");
-            for (int j = 0; j < n; j++) {
-                System.out.printf("%2d ", matriz[i][j]);
-            }
-            System.out.println("}");
-        }
+        imprimir(matriz);
 
         System.out.println("===============EJERCICIOS===============");
 
@@ -39,6 +33,20 @@ public class matrices {
         //permutacion(matriz, n, scan);
         System.out.println("==================QUINTO================");
         transposicion(matriz, n);
+        transNC(scan, randomizer);
+        System.out.println("==================SEXTO=================");
+        transpDos(matriz, n);
+    }
+
+    private static void transpDos(int[][] matriz, int n) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i >= j)
+                    matriz[i][j] = matriz[j][i];
+            }
+        }
+
+        imprimir(matriz);
     }
 
     private static void transposicion(int[][] matriz, int n) {
@@ -50,14 +58,45 @@ public class matrices {
             }
         }
 
+        imprimir(transposicion);
+    }
+
+    public static void transNC(Scanner scan, Random rand) {
+        System.out.println("Ingrese el numero de columnas: ");
+        int n = scan.nextInt();
+        System.out.println("Ingrese el numero de filas: ");
+        int m = scan.nextInt();
+
+        int[][] matriz = new int[n][m];
+
+        //NOTE: Asignamos numeros aleatorios a la matriz
         for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                matriz[i][j] = rand.nextInt(100);
+            }
+        }
+
+        imprimir(matriz);
+        System.out.println();
+
+        //TODO terminar esta mierdaaaa
+        int[][]  transposicion = new int[m][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                transposicion[j][i] = matriz[i][j];
+            }
+        }
+        imprimir(transposicion);
+    }
+
+    private static void imprimir(int[][] matriz) {
+        for (int i = 0; i < matriz.length; i++) {
             System.out.print("{ ");
-            for (int j = 0; j < n; j++) {
+            for (int j = 0; j < matriz[i].length; j++) {
                 System.out.printf("%2d ", matriz[i][j]);
             }
             System.out.println("}");
         }
-
     }
 
     /*
